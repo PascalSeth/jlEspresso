@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import { Coffee, Info, Leaf } from 'lucide-react';
-
+import { motion, AnimatePresence } from 'framer-motion';
 interface Category {
   id: string;
   name: string;
@@ -111,20 +111,36 @@ const CoffeeGuide: React.FC = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8"
+    >
       {/* Header */}
-      <div className="text-center mb-12">
+      <motion.div 
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.2 }}
+        className="text-center mb-12"
+      >
         <h2 className="text-3xl sm:text-4xl font-serif mb-4">Understanding Coffee Types</h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
           A guide to different coffee preparations and their characteristics. Learn about various brewing methods and styles to find your perfect cup.
         </p>
-      </div>
+      </motion.div>
 
       {/* Categories */}
-      <div className="flex flex-wrap justify-center gap-4 mb-8">
+      <motion.div 
+        initial={{ y: -10, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.4 }}
+        className="flex flex-wrap justify-center gap-4 mb-8"
+      >
         {categories.map((category) => (
-          <button
+          <motion.button
             key={category.id}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => setSelectedCategory(category.id)}
             className={`px-6 py-2 rounded-full text-sm transition-colors
               ${selectedCategory === category.id 
@@ -132,46 +148,75 @@ const CoffeeGuide: React.FC = () => {
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
           >
             {category.name}
-          </button>
+          </motion.button>
         ))}
-      </div>
+      </motion.div>
 
       {/* Coffee Types Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {coffeeTypes[selectedCategory]?.map((coffee) => (
-          <div key={coffee.name} className="relative bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
-            {/* Coffee Image */}
-            <img 
-              src={coffee.image} 
-              alt={coffee.name} 
-              className="absolute top-1 right-3 w-14 h-14 rounded-full border-2 border-gray-300 shadow-md object-cover"
-            />
-            
-            <div className="flex items-start gap-4">
-              <Coffee className="w-6 h-6 text-gray-700 mt-1 flex-shrink-0" />
-              <div>
-                <h3 className="font-serif text-xl mb-2">{coffee.name}</h3>
-                <p className="text-gray-600 mb-4">{coffee.description}</p>
-                
-                <div className="space-y-2">
-                  <p className="text-sm font-medium text-gray-700">Key Characteristics:</p>
-                  <ul className="grid grid-cols-2 gap-2">
-                    {coffee.key_features.map((feature, index) => (
-                      <li key={index} className="flex items-center text-sm text-gray-600">
-                        <Leaf className="w-4 h-4 mr-2 text-gray-400" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
+      <AnimatePresence mode="wait">
+        <motion.div 
+          key={selectedCategory}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        >
+          {coffeeTypes[selectedCategory]?.map((coffee, index) => (
+            <motion.div
+              key={coffee.name}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              whileHover={{ scale: 1.02 }}
+              className="relative bg-white rounded-lg p-6 border border-gray-200 shadow-sm"
+            >
+              <motion.img 
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: index * 0.1 + 0.2 }}
+                src={coffee.image} 
+                alt={coffee.name} 
+                className="absolute top-1 right-3 w-14 h-14 rounded-full border-2 border-gray-300 shadow-md object-cover"
+              />
+              
+              <div className="flex items-start gap-4">
+                <Coffee className="w-6 h-6 text-gray-700 mt-1 flex-shrink-0" />
+                <div>
+                  <h3 className="font-serif text-xl mb-2">{coffee.name}</h3>
+                  <p className="text-gray-600 mb-4">{coffee.description}</p>
+                  
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium text-gray-700">Key Characteristics:</p>
+                    <ul className="grid grid-cols-2 gap-2">
+                      {coffee.key_features.map((feature, featureIndex) => (
+                        <motion.li
+                          key={featureIndex}
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.1 + featureIndex * 0.1 }}
+                          className="flex items-center text-sm text-gray-600"
+                        >
+                          <Leaf className="w-4 h-4 mr-2 text-gray-400" />
+                          {feature}
+                        </motion.li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        ))}
-      </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </AnimatePresence>
 
       {/* Educational Notes */}
-      <div className="mt-12 bg-gray-50 p-6 rounded-lg">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.6 }}
+        className="mt-12 bg-gray-50 p-6 rounded-lg"
+      >
         <div className="flex items-start gap-4">
           <Info className="w-6 h-6 text-gray-700 mt-1" />
           <div>
@@ -184,8 +229,8 @@ const CoffeeGuide: React.FC = () => {
             </ul>
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

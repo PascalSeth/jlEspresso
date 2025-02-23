@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import { Coffee, Settings, Info, AlertCircle, LucideIcon } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // Type Definitions
 type CategoryKey = 'traditional' | 'beanToCup' | 'bulkBrew';
@@ -158,20 +159,37 @@ const CoffeeMachineShowcase: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="min-h-screen bg-gray-50 py-12"
+    >
       <div className="max-w-7xl mx-auto px-4">
-        <div className="text-center mb-12">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Coffee Machine Technical Specifications</h1>
           <p className="text-lg text-gray-600">Detailed technical analysis and specifications of professional coffee equipment</p>
-        </div>
+        </motion.div>
 
         {/* Category Selection */}
-        <div className="flex flex-col md:flex-row gap-6 mb-12">
-          {(Object.entries(categoryInfo) as [CategoryKey, CategoryMetadata][]).map(([key, info]) => {
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="flex flex-col md:flex-row gap-6 mb-12"
+        >
+          {(Object.entries(categoryInfo) as [CategoryKey, CategoryMetadata][]).map(([key, info], index) => {
             const IconComponent = info.icon;
             return (
-              <button
+              <motion.button
                 key={key}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.4, delay: index * 0.1 + 0.3 }}
                 onClick={() => setActiveCategory(key)}
                 className={`flex-1 p-6 rounded-xl transition-all ${
                   activeCategory === key 
@@ -184,51 +202,80 @@ const CoffeeMachineShowcase: React.FC = () => {
                 </div>
                 <h3 className="text-lg font-semibold mb-2">{info.title}</h3>
                 <p className="text-sm opacity-80">{info.description}</p>
-              </button>
+              </motion.button>
             )
           })}
-        </div>
+        </motion.div>
 
         {/* Technical Note */}
-        <div className="mb-8 p-4 bg-blue-50 rounded-xl border border-blue-100">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mb-8 p-4 bg-blue-50 rounded-xl border border-blue-100"
+        >
           <div className="flex items-start gap-3">
             <AlertCircle className="text-blue-600 mt-1" size={20} />
             <p className="text-sm text-blue-900">{categoryInfo[activeCategory].technicalNote}</p>
           </div>
-        </div>
+        </motion.div>
 
         {/* Specifications Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {machines[activeCategory].map((machine, index) => (
-            <div key={index} className="bg-white rounded-xl shadow-lg overflow-hidden">
-           <div className='flex flex-col items-center'>
-           <img 
-                src={machine.image}
-                alt={`${machine.name} technical view`}
-                className="w-fit rounded-[1pc] h-48 object-contain"
-              />
-           </div>
-              
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">{machine.name}</h3>
-                
-                <div className="space-y-4">
-                  {Object.entries(machine.specs).map(([key, value], idx) => (
-                    <div key={idx} className="flex items-start space-x-3">
-                      <Info className="text-blue-600 mt-1" size={16} />
-                      <div>
-                        <span className="block text-sm font-medium text-gray-900">{key}</span>
-                        <span className="text-sm text-gray-600">{value}</span>
-                      </div>
-                    </div>
-                  ))}
+        <AnimatePresence mode="wait">
+          <motion.div 
+            key={activeCategory}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5 }}
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {machines[activeCategory].map((machine, index) => (
+              <motion.div 
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="bg-white rounded-xl shadow-lg overflow-hidden"
+              >
+                <div className="flex flex-col items-center">
+                  <motion.img 
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                    src={machine.image}
+                    alt={`${machine.name} technical view`}
+                    className="w-fit rounded-[1pc] h-48 object-contain"
+                  />
                 </div>
-              </div>
-            </div>
-          ))}
-        </div>
+                
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">{machine.name}</h3>
+                  
+                  <div className="space-y-4">
+                    {Object.entries(machine.specs).map(([key, value], idx) => (
+                      <motion.div 
+                        key={idx}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.3, delay: idx * 0.1 }}
+                        className="flex items-start space-x-3"
+                      >
+                        <Info className="text-blue-600 mt-1" size={16} />
+                        <div>
+                          <span className="block text-sm font-medium text-gray-900">{key}</span>
+                          <span className="text-sm text-gray-600">{value}</span>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

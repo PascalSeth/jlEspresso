@@ -1,5 +1,6 @@
 'use client'
 import React from 'react';
+import { motion } from 'framer-motion';
 
 interface MediaItem {
   id: number;
@@ -51,57 +52,132 @@ const ServiceShowcase = () => {
     }
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6
+      }
+    }
+  };
+
+  const floatAnimation = {
+    y: [-5, 5],
+    transition: {
+      y: {
+        duration: 2,
+        repeat: Infinity,
+        repeatType: "reverse",
+        ease: "easeInOut"
+      }
+    }
+  };
+
+  const hoverAnimation = {
+    scale: 1.03,
+    transition: {
+      duration: 0.3,
+      ease: "easeOut"
+    }
+  };
+
   return (
-    <div className="bg-amber-50 py-16">
+    <motion.div 
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+      className="bg-amber-50 py-16"
+    >
       <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-serif text-amber-900 text-center mb-8">
+        <motion.h2 
+          animate={floatAnimation}
+          className="text-3xl md:text-4xl font-serif text-amber-900 text-center mb-8"
+        >
           Our Service Workshop
-        </h2>
+        </motion.h2>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <motion.div 
+          variants={containerVariants}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+        >
           {mediaItems.map((item) => (
-            <div
+            <motion.div
               key={item.id}
+              variants={itemVariants}
+              whileHover={hoverAnimation}
               className="relative aspect-video rounded-lg overflow-hidden shadow-lg group"
             >
-              <div className="relative aspect-video rounded-lg overflow-hidden shadow-lg group">
-  {item.type === 'video' ? (
-    <>
-       <video
-        className="w-full h-full object-cover"
-        poster={item.thumbnail}
-        controls
-        autoPlay
-        muted
-        loop
-        playsInline
-      >
-        <source src={item.src} type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-    </>
-  ) : (
-    <>
-      <img
-        src={item.src}
-        alt={item.title}
-        className="w-full h-full object-cover"
-      />
-      <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300" />
-    </>
-  )}
-  <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/50 to-transparent">
-    <h3 className="text-white text-lg font-medium">{item.title}</h3>
-  </div>
-</div>
-              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/50 to-transparent">
-                <h3 className="text-white text-lg font-medium">{item.title}</h3>
-              </div>
-            </div>
+              <motion.div 
+                className="relative aspect-video rounded-lg overflow-hidden shadow-lg group"
+                whileHover={{
+                  scale: 1.05,
+                  transition: { duration: 0.3 }
+                }}
+              >
+                {item.type === 'video' ? (
+                  <video
+                    className="w-full h-full object-cover"
+                    poster={item.thumbnail}
+                    controls
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                  >
+                    <source src={item.src} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                ) : (
+                  <>
+                    <motion.img
+                      src={item.src}
+                      alt={item.title}
+                      className="w-full h-full object-cover"
+                      whileHover={{
+                        scale: 1.1,
+                        transition: { duration: 0.5 }
+                      }}
+                    />
+                    <motion.div 
+                      className="absolute inset-0 bg-black bg-opacity-0"
+                      whileHover={{
+                        backgroundColor: "rgba(0, 0, 0, 0.2)",
+                        transition: { duration: 0.3 }
+                      }}
+                    />
+                  </>
+                )}
+                <motion.div 
+                  className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/50 to-transparent"
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                  <motion.h3 
+                    className="text-white text-lg font-medium"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    {item.title}
+                  </motion.h3>
+                </motion.div>
+              </motion.div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

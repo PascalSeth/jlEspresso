@@ -1,48 +1,54 @@
+'use client'
 import React from 'react';
 import { Coffee, Settings, Users, Leaf, Star, Info, MapPin, Clock, Phone } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+
+const fadeIn = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+};
 
 const AboutUsPage = () => {
   return (
-    <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8"
+    >
       {/* Hero Section */}
-      <div className="relative h-96 mb-12 rounded-xl overflow-hidden">
-  <video 
-    src="/jlexpresso/shopview.mp4" 
-    autoPlay 
-    loop 
-    muted 
-    playsInline 
-    className="w-full h-full object-cover"
-  />
-  <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-    <div className="text-center text-white p-6">
-      <h1 className="text-4xl font-serif mb-4">Crafting Excellence in Coffee</h1>
-      <p className="text-xl max-w-2xl">
-        From premium beans to expert service, we&apos;re dedicated to delivering exceptional coffee solutions across the United Kingdom.
-      </p>
-    </div>
-  </div>
-</div>
-
+      <motion.div className="relative h-96 mb-12 rounded-xl overflow-hidden" variants={fadeIn}>
+        <video 
+          src="/jlexpresso/shopview.mp4" 
+          autoPlay 
+          loop 
+          muted 
+          playsInline 
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+          <motion.div className="text-center text-white p-6" variants={fadeIn}>
+            <h1 className="text-4xl font-serif mb-4">Crafting Excellence in Coffee</h1>
+            <p className="text-xl max-w-2xl">
+              From premium beans to expert service, we&apos;re dedicated to delivering exceptional coffee solutions across the United Kingdom.
+            </p>
+          </motion.div>
+        </div>
+      </motion.div>
 
       {/* Stats Section */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-        {[
-          { number: '2010', label: 'Established' },
-          { number: 'UK-Wide', label: 'Coverage' },
-          { number: '1000+', label: 'Happy Clients' },
-          { number: '24/7', label: 'Support' }
-        ].map((stat, index) => (
-          <div key={index} className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm text-center">
+      <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12" variants={fadeIn}>
+        {[{ number: '2010', label: 'Established' }, { number: 'UK-Wide', label: 'Coverage' }, { number: '1000+', label: 'Happy Clients' }, { number: '24/7', label: 'Support' }].map((stat, index) => (
+          <motion.div key={index} className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm text-center" whileHover={{ scale: 1.05 }}>
             <h3 className="text-3xl font-serif text-gray-800 mb-2">{stat.number}</h3>
             <p className="text-gray-600">{stat.label}</p>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {/* Our Story Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-        <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+      <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12" variants={fadeIn}>
+        <motion.div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm" whileHover={{ scale: 1.02 }}>
           <div className="flex items-start gap-4">
             <Coffee className="w-6 h-6 text-gray-700 mt-1 flex-shrink-0" />
             <div>
@@ -53,16 +59,11 @@ const AboutUsPage = () => {
               </div>
             </div>
           </div>
-        </div>
-        <div className="rounded-lg overflow-hidden h-64">
-          <img 
-          src="/jlexpresso/JlBusLeft.jpeg" 
-          alt="bus" 
-            className="w-full h-full object-cover"
-          />
-        </div>
-      </div>
-
+        </motion.div>
+        <motion.div className="rounded-lg overflow-hidden h-64" whileHover={{ scale: 1.02 }}>
+          <img src="/jlexpresso/JlBusLeft.jpeg" alt="bus" className="w-full h-full object-cover" />
+        </motion.div>
+      </motion.div>
       {/* Services Section */}
       <h3 className="font-serif text-2xl mb-6">Our Offerings</h3>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
@@ -203,7 +204,7 @@ const AboutUsPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

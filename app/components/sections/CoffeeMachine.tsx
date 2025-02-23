@@ -2,6 +2,7 @@
 import React, { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
+import { motion } from "framer-motion";
 import "swiper/css";
 import "swiper/css/navigation";
 import { ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react";
@@ -51,29 +52,85 @@ const coffeeMachines = [
   },
 ];
 
+const MotionButton = motion(Button);
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" }
+  }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2
+    }
+  }
+};
+
+const statusBadgeVariants = {
+  initial: { scale: 0, opacity: 0 },
+  animate: { 
+    scale: 1, 
+    opacity: 1,
+    transition: { type: "spring", stiffness: 300, damping: 20 }
+  }
+};
+
 const CoffeeMachine = () => {
   const swiperRef = useRef<SwiperCore | null>(null);
 
   return (
-    <div className="p-6 sm:p-10 bg-white max-w-6xl mx-auto">
+    <motion.div 
+      initial="hidden"
+      animate="visible"
+      variants={staggerContainer}
+      className="p-6 sm:p-10 bg-white max-w-6xl mx-auto"
+    >
       <div className="flex flex-col sm:flex-row items-center justify-between">
-        <h2 className="text-2xl sm:text-3xl font-bold text-center sm:text-left">
+        <motion.h2 
+          variants={fadeInUp}
+          className="text-2xl sm:text-3xl font-bold text-center sm:text-left"
+        >
           PREMIUM COFFEE MACHINES
-        </h2>
-        <div className="flex gap-2">
-          <Button onClick={() => swiperRef.current?.slidePrev()}>
+        </motion.h2>
+        <motion.div 
+          variants={fadeInUp}
+          className="flex gap-2"
+        >
+          <MotionButton 
+            onClick={() => swiperRef.current?.slidePrev()}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
             <ChevronLeft size={20} />
-          </Button>
-          <Button onClick={() => swiperRef.current?.slideNext()}>
+          </MotionButton>
+          <MotionButton 
+            onClick={() => swiperRef.current?.slideNext()}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
             <ChevronRight size={20} />
-          </Button>
-        </div>
+          </MotionButton>
+        </motion.div>
       </div>
-      <p className="text-gray-600 mt-2 text-center sm:text-left">
+      <motion.p 
+        variants={fadeInUp}
+        className="text-gray-600 mt-2 text-center sm:text-left"
+      >
         Discover our collection of professional-grade coffee machines for the perfect brew.
-      </p>
+      </motion.p>
 
-      <div className="relative mt-8">
+      <motion.div 
+        variants={fadeInUp}
+        className="relative mt-8"
+      >
         <Swiper
           modules={[Navigation]}
           spaceBetween={15}
@@ -88,8 +145,19 @@ const CoffeeMachine = () => {
         >
           {coffeeMachines.map((machine) => (
             <SwiperSlide key={machine.id}>
-              <div className="relative group w-full rounded-lg overflow-hidden bg-neutral-100">
-                <div className="absolute top-3 left-3 z-10">
+              <motion.div 
+                className="relative group w-full rounded-lg overflow-hidden bg-neutral-100"
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                whileHover={{ y: -5 }}
+              >
+                <motion.div 
+                  className="absolute top-3 left-3 z-10"
+                  variants={statusBadgeVariants}
+                  initial="initial"
+                  animate="animate"
+                >
                   <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
                     machine.status === "NEW" 
                       ? "bg-green-500 text-white" 
@@ -97,46 +165,102 @@ const CoffeeMachine = () => {
                   }`}>
                     {machine.status}
                   </span>
-                </div>
+                </motion.div>
                 
                 <img
                   src={machine.image}
                   alt={machine.name}
                   className="w-full h-60 sm:h-72 object-cover transition duration-300 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4">
-                  <div className="absolute top-3 right-3">
-                    <Button 
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.div 
+                    className="absolute top-3 right-3"
+                    whileHover={{ scale: 1.1 }}
+                  >
+                    <MotionButton 
                       variant="ghost" 
                       size="icon"
                       className="bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full w-10 h-10"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
                     >
                       <ShoppingCart className="h-5 w-5 text-white" />
-                    </Button>
-                  </div>
-                  <h3 className="text-lg font-semibold text-white">{machine.name}</h3>
-                  <p className="text-gray-200 text-sm mt-1">By {machine.brand}</p>
-                  <p className="text-gray-200 text-sm mt-1">{machine.features}</p>
-                  <div className="flex justify-between items-center mt-2">
-                    <span className="text-white text-sm bg-black/50 px-2 py-1 rounded">
+                    </MotionButton>
+                  </motion.div>
+                  <motion.h3 
+                    className="text-lg font-semibold text-white"
+                    initial={{ y: 20, opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    {machine.name}
+                  </motion.h3>
+                  <motion.p 
+                    className="text-gray-200 text-sm mt-1"
+                    initial={{ y: 20, opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                  >
+                    By {machine.brand}
+                  </motion.p>
+                  <motion.p 
+                    className="text-gray-200 text-sm mt-1"
+                    initial={{ y: 20, opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                  >
+                    {machine.features}
+                  </motion.p>
+                  <motion.div 
+                    className="flex justify-between items-center mt-2"
+                    initial={{ y: 20, opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                  >
+                    <motion.span 
+                      className="text-white text-sm bg-black/50 px-2 py-1 rounded"
+                      whileHover={{ scale: 1.05 }}
+                    >
                       {machine.type}
-                    </span>
-                    <p className="text-xl font-bold text-white">{machine.price}</p>
-                  </div>
-                </div>
-              </div>
+                    </motion.span>
+                    <motion.p 
+                      className="text-xl font-bold text-white"
+                      whileHover={{ scale: 1.05 }}
+                    >
+                      {machine.price}
+                    </motion.p>
+                  </motion.div>
+                </motion.div>
+              </motion.div>
             </SwiperSlide>
           ))}
         </Swiper>
-      </div>
+      </motion.div>
 
-      <div className="flex flex-col sm:flex-row justify-between items-center mt-6">
-        <p className="text-gray-600 text-center sm:text-left max-w-md">
+      <motion.div 
+        variants={fadeInUp}
+        className="flex flex-col sm:flex-row justify-between items-center mt-6"
+      >
+        <motion.p 
+          variants={fadeInUp}
+          className="text-gray-600 text-center sm:text-left max-w-md"
+        >
           From entry-level to professional-grade machines, find the perfect coffee maker to match your brewing style and needs.
-        </p>
-        <Button className="bg-black text-white px-6 py-2 mt-4 sm:mt-0">Shop All Machines</Button>
-      </div>
-    </div>
+        </motion.p>
+        <MotionButton 
+          className="bg-black text-white px-6 py-2 mt-4 sm:mt-0"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          Shop All Machines
+        </MotionButton>
+      </motion.div>
+    </motion.div>
   );
 };
 
