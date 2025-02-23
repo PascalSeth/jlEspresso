@@ -56,8 +56,8 @@ const AboutUsPage = () => {
         </div>
         <div className="rounded-lg overflow-hidden h-64">
           <img 
-            src="/api/placeholder/600/400" 
-            alt="Coffee roasting process" 
+          src="/jlexpresso/JlBusLeft.jpeg" 
+          alt="bus" 
             className="w-full h-full object-cover"
           />
         </div>
