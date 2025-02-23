@@ -48,7 +48,7 @@ const ContactUs = () => {
               icon={<Coffee size={24} />}
               title="Coffee Consultations"
               description="Looking to explore our coffee selection or need brewing advice? Our coffee experts are here to help."
-              email="coffee@example.com"
+              email="jlespresso@gmail.com"
               phone="555-123-4567"
             />
             
@@ -56,14 +56,14 @@ const ContactUs = () => {
               icon={<Phone size={24} />}
               title="Wholesale Inquiries"
               description="Interested in serving our coffee at your establishment? Let's discuss partnership opportunities."
-              email="wholesale@example.com"
+              email="jlespresso@gmail.com"
             />
             
             <ContactSection
               icon={<MessageSquare size={24} />}
               title="Customer Care"
               description="Questions about your order or our products? Our team is ready to assist."
-              email="care@example.com"
+              email="jlespresso@gmail.com"
             />
 
             <div className="mt-8 p-6 bg-amber-900 rounded-lg text-amber-50">

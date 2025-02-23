@@ -16,7 +16,7 @@ const Footer = () => {
           <img src="/jlexpresso/JLLogo.png" alt=" Logo" className="h-12" />
           <h3 className='font-semibold'>JL <span>Espresso</span></h3>
           </div>
-          <p className="text-sm mb-4">Making the world a better place through innovative solutions.</p>
+          <p className="text-sm mb-4">Powering Your Perfect Coffee Experience</p>
             <div className="flex space-x-4">
               <a href="#" className="hover:text-gray-900 transition-colors">
                 <Facebook size={20} />
@@ -33,11 +33,13 @@ const Footer = () => {
           {/* Quick Links */}
           <div className='flex flex-col space-y-2'>
             <h3 className="text-lg font-semibold mb-4 text-gray-900">Quick Links</h3>
-              <Link href="#" className="text-sm hover:text-gray-900 transition-colors">About Us</Link>
-              <Link href="#" className="text-sm hover:text-gray-900 transition-colors">Services</Link>
-              <Link href="#" className="text-sm hover:text-gray-900 transition-colors">Projects</Link>
-              <Link href="#" className="text-sm hover:text-gray-900 transition-colors">Blog</Link>
-          </div>
+            <Link href="/coffee" className="cursor-pointer hover:text-black">Coffee</Link>
+        <Link href="/coffee-machines" className="cursor-pointer hover:text-black">Coffee Machines</Link>
+        <Link href="/services" className="cursor-pointer hover:text-black">Service</Link>
+        <Link href="/about-us" className="cursor-pointer hover:text-black">About Us</Link>
+        <Link href="/contact-us" className="cursor-pointer hover:text-black">Contact</Link>
+        <Link href="/shop" className="cursor-pointer hover:text-black">Shop</Link>
+  </div>
 
           {/* Resources */}
           <div className='flex flex-col space-y-2'>
