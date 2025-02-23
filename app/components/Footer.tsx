@@ -1,6 +1,6 @@
 'use client'
 import React from 'react';
-import { Facebook, Twitter, Instagram, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Mail, Phone, MapPin, Linkedin } from 'lucide-react';
 import Link from 'next/link';
 
 const Footer = () => {
@@ -18,14 +18,17 @@ const Footer = () => {
           </div>
           <p className="text-sm mb-4">Powering Your Perfect Coffee Experience</p>
             <div className="flex space-x-4">
-              <a href="#" className="hover:text-gray-900 transition-colors">
+              <a href="https://web.facebook.com/profile.php?id=61573161185770" className="hover:text-gray-900 transition-colors">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="hover:text-gray-900 transition-colors">
+              <a href="" className="hover:text-gray-900 transition-colors">
                 <Twitter size={20} />
               </a>
-              <a href="#" className="hover:text-gray-900 transition-colors">
+              <a  href="https://www.instagram.com/j.lespresso/" className="hover:text-gray-900 transition-colors">
                 <Instagram size={20} />
+              </a>
+              <a  href="https://www.linkedin.com/company/j-l-espresso/?viewAsMember=true" className="hover:text-gray-900 transition-colors">
+                <Linkedin size={20} />
               </a>
             </div>
           </div>
@@ -56,15 +59,15 @@ const Footer = () => {
             <div className="space-y-2">
               <div className="flex items-center text-sm">
                 <Mail size={16} className="mr-2" />
-                <span>contact@example.com</span>
+                <span>Support@jlespresso.com</span>
               </div>
               <div className="flex items-center text-sm">
                 <Phone size={16} className="mr-2" />
-                <span>+1 (555) 123-4567</span>
+                <span>+44 7903856712</span>
               </div>
               <div className="flex items-center text-sm">
                 <MapPin size={16} className="mr-2" />
-                <span>123 Business Ave, Suite 100<br />City, State 12345</span>
+                <span>Gretton Rd, <br />Corby NN17 3HN, United Kingdom</span>
               </div>
             </div>
           </div>

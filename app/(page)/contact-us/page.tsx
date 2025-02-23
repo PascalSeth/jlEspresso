@@ -48,28 +48,28 @@ const ContactUs = () => {
               icon={<Coffee size={24} />}
               title="Coffee Consultations"
               description="Looking to explore our coffee selection or need brewing advice? Our coffee experts are here to help."
-              email="jlespresso@gmail.com"
-              phone="555-123-4567"
+              email="Support@jlespresso.com"
+              phone="+44 7903856712"
             />
             
             <ContactSection
               icon={<Phone size={24} />}
               title="Wholesale Inquiries"
               description="Interested in serving our coffee at your establishment? Let's discuss partnership opportunities."
-              email="jlespresso@gmail.com"
+              email="Support@jlespresso.com"
             />
             
             <ContactSection
               icon={<MessageSquare size={24} />}
               title="Customer Care"
               description="Questions about your order or our products? Our team is ready to assist."
-              email="jlespresso@gmail.com"
+              email="Support@jlespresso.com"
             />
 
             <div className="mt-8 p-6 bg-amber-900 rounded-lg text-amber-50">
-              <h3 className="text-xl font-semibold mb-3">Visit Our Roastery</h3>
-              <p className="mb-2">123 Coffee Lane</p>
-              <p className="mb-2">Brewery District</p>
+              <h3 className="text-xl font-semibold mb-3">Visit Our Shop</h3>
+              <p className="mb-2">Gretton Rd,</p>
+              <p className="mb-2">Corby NN17 3HN, United Kingdom</p>
               <p>Open Monday-Friday: 9AM-5PM</p>
             </div>
           </div>
