@@ -17,20 +17,41 @@ const Footer = () => {
           <h3 className='font-semibold'>JL <span>Espresso</span></h3>
           </div>
           <p className="text-sm mb-4">Powering Your Perfect Coffee Experience</p>
-            <div className="flex space-x-4">
-              <a href="https://web.facebook.com/profile.php?id=61573161185770" className="hover:text-gray-900 transition-colors">
-                <Facebook size={20} />
-              </a>
-              <a href="" className="hover:text-gray-900 transition-colors">
-                <Twitter size={20} />
-              </a>
-              <a  href="https://www.instagram.com/j.lespresso/" className="hover:text-gray-900 transition-colors">
-                <Instagram size={20} />
-              </a>
-              <a  href="https://www.linkedin.com/company/j-l-espresso/?viewAsMember=true" className="hover:text-gray-900 transition-colors">
-                <Linkedin size={20} />
-              </a>
-            </div>
+          <div className="flex space-x-4">
+  <a 
+    href="https://web.facebook.com/profile.php?id=61573161185770" 
+    className="hover:text-gray-900 transition-colors" 
+    target="_blank" 
+    rel="noopener noreferrer"
+  >
+    <Facebook size={20} />
+  </a>
+  <a 
+    href="" 
+    className="hover:text-gray-900 transition-colors" 
+    target="_blank" 
+    rel="noopener noreferrer"
+  >
+    <Twitter size={20} />
+  </a>
+  <a  
+    href="https://www.instagram.com/j.lespresso/" 
+    className="hover:text-gray-900 transition-colors" 
+    target="_blank" 
+    rel="noopener noreferrer"
+  >
+    <Instagram size={20} />
+  </a>
+  <a  
+    href="https://www.linkedin.com/company/j-l-espresso/?viewAsMember=true" 
+    className="hover:text-gray-900 transition-colors" 
+    target="_blank" 
+    rel="noopener noreferrer"
+  >
+    <Linkedin size={20} />
+  </a>
+</div>
+
           </div>
 
           {/* Quick Links */}

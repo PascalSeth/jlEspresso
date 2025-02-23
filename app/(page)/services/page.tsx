@@ -98,7 +98,7 @@ const EspressoServices: React.FC = () => {
         <div className="max-w-7xl mx-auto flex items-center justify-center gap-2">
           <AlertTriangle size={20} />
           <span className="font-medium">Machine Broken? Call Now: </span>
-          <a href="tel:+441234567890" className="font-bold hover:underline">01234 567890</a>
+          <a href="tel:+447903856712" className="font-bold hover:underline">+44 7903856712</a>
         </div>
       </div>
 
@@ -230,7 +230,7 @@ const EspressoServices: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
-              href="tel:+441234567890"
+              href="tel:+447903856712"
               className="bg-white hover:bg-amber-100 text-amber-900 py-3 px-8 rounded-lg shadow-md transition duration-300 flex items-center justify-center gap-2"
             >
               <Phone size={20} />
