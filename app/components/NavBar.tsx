@@ -12,7 +12,7 @@ const Navbar = () => {
       </Link>
 
       {/* Desktop Navigation Links (Hidden on max-lg) */}
-      <div className="hidden lg:flex font-semibold text-base items-center gap-6 text-amber-700">
+      <div className="max-lg:hidden flex font-semibold text-base items-center gap-6 text-amber-700">
         <Link href="/coffee" className="cursor-pointer hover:text-black">Coffee</Link>
         <Link href="/coffee-machines" className="cursor-pointer hover:text-black">Coffee Machines</Link>
         <Link href="/services" className="cursor-pointer hover:text-black">Service</Link>
@@ -22,7 +22,7 @@ const Navbar = () => {
       </div>
 
       {/* Right Section (Hidden on max-lg) */}
-      <div className="hidden lg:flex items-center gap-4">
+      <div className="max-lg:hidden flex items-center gap-4">
         <button className="relative p-2 bg-gray-100 rounded-full shadow-md">
           <ShoppingBag className="h-5 w-5 text-gray-700" />
         </button>

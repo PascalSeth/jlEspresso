@@ -73,8 +73,8 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-gray-200 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-sm">&copy; {year} Company Name. All rights reserved.</p>
-            <div className="mt-4 md:mt-0">
+            <p className="text-sm">&copy; {year} Jl Espresso. All rights reserved.</p>
+            <div className="mt-4 space-x-3 md:space-y-3  md:mt-0">
                 <Link href="#" className="hover:text-gray-900 transition-colors">Privacy</Link>
                 <Link href="#" className="hover:text-gray-900 transition-colors">Terms</Link>
                 <Link href="#" className="hover:text-gray-900 transition-colors">Cookies</Link>

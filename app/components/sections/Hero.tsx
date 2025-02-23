@@ -12,7 +12,7 @@ const slides = [
     description: "Sourced from the finest farms worldwide, our coffee beans ensure a rich and flavorful experience.",
     button1: "Shop Beans",
     button2: "Learn More",
-    image: "https://i.pinimg.com/736x/3a/be/c7/3abec76cfcbb81afaa653476bdfe2604.jpg",
+    image: "/beanscoffee.jpg",
     rating: 4.9,
   },
   {
