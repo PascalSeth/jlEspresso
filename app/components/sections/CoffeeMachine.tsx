@@ -1,14 +1,16 @@
-'use client'
-import React from "react";
+"use client";
+import React, { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import { ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Swiper as SwiperCore } from "swiper";
 
 const coffeeMachines = [
   { 
+    id: 1,
     name: "Mielle Countertop",
     brand: "Breville",
     price: "$240.099",
@@ -18,6 +20,7 @@ const coffeeMachines = [
     status: "NEW"
   },
   { 
+    id: 2,
     name: "Delonghi Maestosa",
     brand: "Delonghi",
     price: "$257.199",
@@ -27,6 +30,7 @@ const coffeeMachines = [
     status: "REFURBISHED"
   },
   { 
+    id: 3,
     name: "Phillips Espresso",
     brand: "Philips",
     price: "$260.299",
@@ -36,6 +40,7 @@ const coffeeMachines = [
     status: "NEW"
   },
   { 
+    id: 4,
     name: "Nespresso",
     brand: "Mocamaster",
     price: "$245.899",
@@ -47,6 +52,8 @@ const coffeeMachines = [
 ];
 
 const CoffeeMachine = () => {
+  const swiperRef = useRef<SwiperCore | null>(null);
+
   return (
     <div className="p-6 sm:p-10 bg-white max-w-6xl mx-auto">
       <div className="flex flex-col sm:flex-row items-center justify-between">
@@ -54,10 +61,10 @@ const CoffeeMachine = () => {
           PREMIUM COFFEE MACHINES
         </h2>
         <div className="flex gap-2">
-          <Button className="prev-btn">
+          <Button onClick={() => swiperRef.current?.slidePrev()}>
             <ChevronLeft size={20} />
           </Button>
-          <Button className="next-btn">
+          <Button onClick={() => swiperRef.current?.slideNext()}>
             <ChevronRight size={20} />
           </Button>
         </div>
@@ -70,8 +77,8 @@ const CoffeeMachine = () => {
         <Swiper
           modules={[Navigation]}
           spaceBetween={15}
-          slidesPerView={3}
-          navigation={{ nextEl: ".next-btn", prevEl: ".prev-btn" }}
+          slidesPerView={1}
+          onSwiper={(swiper) => (swiperRef.current = swiper)}
           breakpoints={{
             640: { slidesPerView: 1 },
             768: { slidesPerView: 2 },
@@ -79,10 +86,9 @@ const CoffeeMachine = () => {
           }}
           className="pb-6"
         >
-          {coffeeMachines.map((machine, index) => (
-            <SwiperSlide key={index}>
-              <div className="relative group rounded-lg overflow-hidden bg-neutral-100">
-                {/* Status Tag */}
+          {coffeeMachines.map((machine) => (
+            <SwiperSlide key={machine.id}>
+              <div className="relative group w-full rounded-lg overflow-hidden bg-neutral-100">
                 <div className="absolute top-3 left-3 z-10">
                   <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
                     machine.status === "NEW" 

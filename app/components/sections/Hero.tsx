@@ -1,9 +1,10 @@
-'use client'
+'use client';
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import { Button } from "@/components/ui/button";
 
 const slides = [
   {
@@ -11,7 +12,7 @@ const slides = [
     description: "Sourced from the finest farms worldwide, our coffee beans ensure a rich and flavorful experience.",
     button1: "Shop Beans",
     button2: "Learn More",
-    image: "/bean_nobg.png",
+    image: "https://i.pinimg.com/736x/3a/be/c7/3abec76cfcbb81afaa653476bdfe2604.jpg",
     rating: 4.9,
   },
   {
@@ -22,14 +23,7 @@ const slides = [
     image: "https://i.pinimg.com/736x/f1/6c/1b/f16c1b144d7bd6119b17786e3353b12e.jpg",
     rating: 5.0,
   },
-  {
-    title: "Exquisite Coffee Blends",
-    description: "Discover a variety of expertly crafted coffee blends that cater to every taste.",
-    button1: "Order Coffee",
-    button2: "View Selection",
-    image: "/coffeecup_nobg.png",
-    rating: 4.8,
-  }
+
 ];
 
 const Hero = () => {
@@ -37,45 +31,40 @@ const Hero = () => {
     const fullStars = Math.floor(rating);
     const halfStar = rating % 1 !== 0;
     return (
-      <span>
+      <span className="text-yellow-400">
         {Array(fullStars).fill("⭐").join("")} {halfStar ? "⭐" : ""}
       </span>
     );
   };
 
   return (
-    <div className="flex items-center justify-center p-5 h-screen max-lg:h-full  w-full">
-      <Swiper
-        modules={[Pagination, Autoplay]}
-        spaceBetween={50}
-        slidesPerView={1}
-        pagination={{ clickable: true }}
-        autoplay={{ delay: 5000 }}
-        className="w-full h-screen max-lg:h-full shadow-md "
-      >
-        {slides.map((slide, index) => (
-          <SwiperSlide key={index}>
-            <div className="flex  h-screen max-lg:h-full md:flex-row items-center justify-between max-lg:p-3 p-10 bg-white rounded-lg shadow-lg">
-              <div className="max-lg:w-1/2 text-left">
-                <h1 className="text-5xl max-lg:text-lg font-bold">{slide.title}</h1>
-                <p className="text-gray-600 max-lg:text-sm mt-4">{slide.description}</p>
-                <div className="mt-6 flex max-lg:flex-col gap-4">
-                  <button className="px-6 py-3 bg-black text-white rounded-lg">{slide.button1}</button>
-                  <button className="px-6 py-3 bg-white border border-black rounded-lg">{slide.button2}</button>
-                </div>
+    <div className="flex items-center max-h-96 max-lg:p-3 justify-center max-lg:max-h-96  h-screen  w-full">
+    <Swiper
+      modules={[Pagination, Autoplay]}
+      pagination={{ clickable: true }}
+      autoplay={{ delay: 4000 }}
+      loop
+      className="w-full max-w-7xl rounded-3xl h-screen max-h-full "
+    >
+      {slides.map((slide, index) => (
+        <SwiperSlide key={index} className="relative w-full h-full">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${slide.image})` }}
+          >
+            <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white text-center px-6 md:px-12">
+              <h2 className="text-4xl md:text-6xl font-bold mb-4">{slide.title}</h2>
+              <p className="text-lg md:text-xl mb-4">{slide.description}</p>
+              <div className="flex gap-4 mb-4">
+                <Button className="bg-primary hover:bg-primary-dark px-6 py-3 text-lg">{slide.button1}</Button>
+                <Button className="bg-secondary hover:bg-secondary-dark px-6 py-3 text-black text-lg">{slide.button2}</Button>
               </div>
-              <div className="relative mt-8  md:mt-0">
-                <img src={slide.image} alt="Coffee Product" className="w-full p-3 max-lg:h-56 object-cover h-full rounded-[2pc] max-lg:rounded-none" />
-                <div className="absolute max-lg:hidden bottom-4 left-4 bg-white shadow-lg p-2 rounded-lg">
-                  <p className="flex items-center gap-2">
-                    {renderStars(slide.rating)} <span>{slide.rating} out of 5 Rating</span>
-                  </p>
-                </div>
-              </div>
+              <p className="text-lg">{renderStars(slide.rating)} {slide.rating} out of 5 Rating</p>
             </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+          </div>
+        </SwiperSlide>
+      ))}
+    </Swiper>
     </div>
   );
 };

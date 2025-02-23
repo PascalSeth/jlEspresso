@@ -63,17 +63,17 @@ export default function CoffeeBeansCarousel() {
 
       <div className="relative mt-8">
         <Swiper
-          modules={[Navigation]}
-          spaceBetween={15}
-          slidesPerView={3}
-          navigation={{ nextEl: ".next-btn", prevEl: ".prev-btn" }}
-          breakpoints={{
-            640: { slidesPerView: 1 },
-            768: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
-          }}
-          className="pb-6"
-        >
+              modules={[Navigation]}
+              spaceBetween={15}
+              slidesPerView={1}
+              navigation={{ nextEl: ".next-btn", prevEl: ".prev-btn" }}
+              breakpoints={{
+                640: { slidesPerView: 1 },
+                768: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 },
+              }}
+              className="pb-6"
+            >
           {coffeeTypes.map((bean, index) => (
             <SwiperSlide key={index}>
               <div className="relative group rounded-lg overflow-hidden bg-neutral-100">
