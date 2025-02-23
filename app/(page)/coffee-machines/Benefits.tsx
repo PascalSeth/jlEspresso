@@ -41,6 +41,7 @@ export default function ShopBenefits() {
               <video 
                 className="w-full h-full object-cover"
                 controls
+                autoPlay
                 preload="metadata"
                 poster="/api/placeholder/800/600"
               >
