@@ -44,29 +44,29 @@ const Hero = () => {
   };
 
   return (
-    <div className="flex items-center justify-center p-5 h-screen w-full">
+    <div className="flex items-center justify-center p-5 h-screen max-lg:h-full  w-full">
       <Swiper
         modules={[Pagination, Autoplay]}
         spaceBetween={50}
         slidesPerView={1}
         pagination={{ clickable: true }}
         autoplay={{ delay: 5000 }}
-        className="w-full h-screen shadow-md "
+        className="w-full h-screen max-lg:h-full shadow-md "
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index}>
-            <div className="flex flex-col h-screen md:flex-row items-center justify-between p-10 bg-white rounded-lg shadow-lg">
-              <div className="max-w-fulltext-left">
-                <h1 className="text-5xl font-bold">{slide.title}</h1>
-                <p className="text-gray-600 mt-4">{slide.description}</p>
-                <div className="mt-6 flex gap-4">
+            <div className="flex  h-screen max-lg:h-full md:flex-row items-center justify-between max-lg:p-3 p-10 bg-white rounded-lg shadow-lg">
+              <div className="max-lg:w-1/2 text-left">
+                <h1 className="text-5xl max-lg:text-lg font-bold">{slide.title}</h1>
+                <p className="text-gray-600 max-lg:text-sm mt-4">{slide.description}</p>
+                <div className="mt-6 flex max-lg:flex-col gap-4">
                   <button className="px-6 py-3 bg-black text-white rounded-lg">{slide.button1}</button>
                   <button className="px-6 py-3 bg-white border border-black rounded-lg">{slide.button2}</button>
                 </div>
               </div>
               <div className="relative mt-8  md:mt-0">
-                <img src={slide.image} alt="Coffee Product" className="w-full object-cover h-full rounded-[2pc]" />
-                <div className="absolute bottom-4 left-4 bg-white shadow-lg p-2 rounded-lg">
+                <img src={slide.image} alt="Coffee Product" className="w-full p-3 max-lg:h-56 object-cover h-full rounded-[2pc] max-lg:rounded-none" />
+                <div className="absolute max-lg:hidden bottom-4 left-4 bg-white shadow-lg p-2 rounded-lg">
                   <p className="flex items-center gap-2">
                     {renderStars(slide.rating)} <span>{slide.rating} out of 5 Rating</span>
                   </p>

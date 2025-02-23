@@ -1,0 +1,87 @@
+'use client'
+import React from 'react';
+import { Facebook, Twitter, Instagram, Mail, Phone, MapPin } from 'lucide-react';
+import Link from 'next/link';
+
+const Footer = () => {
+  const year = new Date().getFullYear();
+
+  return (
+    <footer className="bg-white border-t border-t-gray-200 text-gray-600">
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Company Info */}
+          <div>
+          <div className='flex items-center mb-4'>
+          <img src="/jlexpresso/JLLogo.png" alt=" Logo" className="h-12" />
+          <h3 className='font-semibold'>JL <span>Espresso</span></h3>
+          </div>
+          <p className="text-sm mb-4">Making the world a better place through innovative solutions.</p>
+            <div className="flex space-x-4">
+              <a href="#" className="hover:text-gray-900 transition-colors">
+                <Facebook size={20} />
+              </a>
+              <a href="#" className="hover:text-gray-900 transition-colors">
+                <Twitter size={20} />
+              </a>
+              <a href="#" className="hover:text-gray-900 transition-colors">
+                <Instagram size={20} />
+              </a>
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div className='flex flex-col space-y-2'>
+            <h3 className="text-lg font-semibold mb-4 text-gray-900">Quick Links</h3>
+              <Link href="#" className="text-sm hover:text-gray-900 transition-colors">About Us</Link>
+              <Link href="#" className="text-sm hover:text-gray-900 transition-colors">Services</Link>
+              <Link href="#" className="text-sm hover:text-gray-900 transition-colors">Projects</Link>
+              <Link href="#" className="text-sm hover:text-gray-900 transition-colors">Blog</Link>
+          </div>
+
+          {/* Resources */}
+          <div className='flex flex-col space-y-2'>
+            <h3 className="text-lg font-semibold mb-4 text-gray-900">Resources</h3>
+              <Link href="#" className="text-sm hover:text-gray-900 transition-colors">Documentation</Link>
+              <Link href="#" className="text-sm hover:text-gray-900 transition-colors">Help Center</Link>
+              <Link href="#" className="text-sm hover:text-gray-900 transition-colors">Privacy Policy</Link>
+              <Link href="#" className="text-sm hover:text-gray-900 transition-colors">Terms of Service</Link>
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-gray-900">Contact</h3>
+            <div className="space-y-2">
+              <div className="flex items-center text-sm">
+                <Mail size={16} className="mr-2" />
+                <span>contact@example.com</span>
+              </div>
+              <div className="flex items-center text-sm">
+                <Phone size={16} className="mr-2" />
+                <span>+1 (555) 123-4567</span>
+              </div>
+              <div className="flex items-center text-sm">
+                <MapPin size={16} className="mr-2" />
+                <span>123 Business Ave, Suite 100<br />City, State 12345</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="border-t border-gray-200 mt-8 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <p className="text-sm">&copy; {year} Company Name. All rights reserved.</p>
+            <div className="mt-4 md:mt-0">
+                <Link href="#" className="hover:text-gray-900 transition-colors">Privacy</Link>
+                <Link href="#" className="hover:text-gray-900 transition-colors">Terms</Link>
+                <Link href="#" className="hover:text-gray-900 transition-colors">Cookies</Link>
+              </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

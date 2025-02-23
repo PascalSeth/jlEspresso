@@ -6,18 +6,17 @@ const Navbar = () => {
   return (
     <nav className="flex items-center sticky z-[999] top-0 left-0 right-0 justify-between px-10 py-4 bg-white shadow-md">
       {/* Logo */}
-      <div className="flex items-center gap-2">
+      <Link href='/' className="flex items-center gap-2">
         <img src="/jlexpresso/JLLogo.png" alt=" Logo" className="h-12" />
-      </div>
+      </Link>
       
       {/* Navigation Links */}
-      <div className="hidden md:flex items-center gap-6 text-gray-800 font-medium">
+      <div className="hidden font-semibold md:flex text-base items-center gap-6 text-amber-700 ">
         <Link href="/coffee" className="cursor-pointer hover:text-black">Coffee</Link>
         <Link href="/coffee-machines" className="cursor-pointer hover:text-black">Coffee Machines</Link>
-        <Link href="/essentials" className="cursor-pointer hover:text-black">Essentials</Link>
-        <Link href="/service" className="cursor-pointer hover:text-black">Service</Link>
+        <Link href="/services" className="cursor-pointer hover:text-black">Service</Link>
         <Link href="/about-us" className="cursor-pointer hover:text-black">About Us</Link>
-        <Link href="/contact" className="cursor-pointer hover:text-black">Contact</Link>
+        <Link href="/contact-us" className="cursor-pointer hover:text-black">Contact</Link>
         <Link href="/shop" className="cursor-pointer hover:text-black">Shop</Link>
       </div>
       
