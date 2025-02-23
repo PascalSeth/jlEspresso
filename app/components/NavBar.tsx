@@ -1,10 +1,11 @@
 import React from "react";
 import Link from "next/link";
-import { ShoppingBag, Menu } from "lucide-react";
+import { ShoppingBag,  } from "lucide-react";
+import MenuSheet from "./MenuSheet";
 
 const Navbar = () => {
   return (
-    <nav className="flex items-center sticky z-[999] top-0 left-0 right-0 justify-between px-10 py-4 bg-white shadow-md">
+    <nav className="flex w-full items-center sticky z-[999] top-0 left-0 right-0 justify-between px-10 py-4 bg-white shadow-md">
       {/* Logo */}
       <Link href="/" className="flex items-center gap-2">
         <img src="/jlexpresso/JLLogo.png" alt="Logo" className="h-12" />
@@ -31,9 +32,9 @@ const Navbar = () => {
       </div>
 
       {/* Menu Icon (Visible on max-lg) */}
-      <button className="lg:hidden">
-        <Menu className="h-6 w-6 text-gray-700" />
-      </button>
+      <div className="lg:hidden">
+      <MenuSheet/>
+      </div>
     </nav>
   );
 };
