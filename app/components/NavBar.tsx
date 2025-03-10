@@ -1,13 +1,12 @@
 'use client';
 import React from "react";
 import Link from "next/link";
-import { ShoppingBag } from "lucide-react";
 import MenuSheet from "./MenuSheet";
 import Marquee from "react-fast-marquee";
 
 const Navbar = () => {
-  const moviingWords = [
-    "We Offer Best Price and Products",
+  const movingWords = [
+    "Powering Your Perfect Coffee Experience",
   ];
 
   return (
@@ -46,22 +45,17 @@ const Navbar = () => {
 
       {/* Right Section */}
       <div className="max-lg:hidden flex items-center gap-4">
-        <button 
+        {/* <button 
           className="relative p-2 bg-gray-100 rounded-full shadow-md hover:bg-gray-200 transition-colors duration-300"
         >
           <ShoppingBag className="h-5 w-5 text-gray-700" />
-        </button>
+        </button> */}
         
         {/* Horizontal Word Marquee */}
-        <div className="bg-[#4F2B1D] text-white rounded-lg overflow-hidden w-36 h-10">
-          <Marquee
-            speed={30}
-            gradient={false}
-            pauseOnHover={true}
-            className="h-full flex items-center"
-          >
-            {moviingWords.map((word, index) => (
-              <span key={index} className="mx-4 font-medium whitespace-nowrap">
+        <div className="bg-amber-700 text-gray-100 rounded-lg overflow-hidden max-w-36 h-10">
+          <Marquee speed={30} gradient={false} pauseOnHover className="h-full flex items-center">
+            {movingWords.map((word, index) => (
+              <span key={index} className="mx-4 font-semibold whitespace-nowrap">
                 {word}
               </span>
             ))}
