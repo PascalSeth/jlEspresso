@@ -160,7 +160,7 @@ const AboutUsPage = () => {
                 <div>
                   <h5 className="font-medium mb-2">Contact</h5>
                   <p className="text-gray-600">+44 7903 856712</p>
-                  <p className="text-gray-600">info@jlespresso.com</p>
+                  <p className="text-gray-600">info@jlespressoservice.com</p>
                 </div>
               </div>
             </div>

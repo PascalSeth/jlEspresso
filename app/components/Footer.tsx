@@ -61,16 +61,15 @@ const Footer = () => {
         <Link href="/coffee-machines" className="cursor-pointer hover:text-black">Coffee Machines</Link>
         <Link href="/services" className="cursor-pointer hover:text-black">Service</Link>
         <Link href="/about-us" className="cursor-pointer hover:text-black">About Us</Link>
-        <Link href="/contact-us" className="cursor-pointer hover:text-black">Contact</Link>
-        <Link href="/shop" className="cursor-pointer hover:text-black">Shop</Link>
+
   </div>
 
           {/* Resources */}
           <div className='flex flex-col space-y-2'>
             <h3 className="text-lg font-semibold mb-4 text-gray-900">Resources</h3>
-              <Link href="#" className="text-sm hover:text-gray-900 transition-colors">Documentation</Link>
-              <Link href="#" className="text-sm hover:text-gray-900 transition-colors">Help Center</Link>
-              <Link href="#" className="text-sm hover:text-gray-900 transition-colors">Privacy Policy</Link>
+            <Link href="/contact-us" className="cursor-pointer hover:text-black">Contact</Link>
+            <Link href="/shop" className="cursor-pointer hover:text-black">Shop</Link>
+             <Link href="#" className="text-sm hover:text-gray-900 transition-colors">Privacy Policy</Link>
               <Link href="#" className="text-sm hover:text-gray-900 transition-colors">Terms of Service</Link>
           </div>
 
@@ -88,7 +87,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center text-sm">
                 <MapPin size={16} className="mr-2" />
-                <span>Gretton Rd, <br />Corby NN17 3HN, United Kingdom</span>
+                <span>Gretton Rd, <br />Corby NN17 3HN, United Kingdom</span>
               </div>
             </div>
           </div>
@@ -98,11 +97,14 @@ const Footer = () => {
         <div className="border-t border-gray-200 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-sm">&copy; {year} Jl Espresso. All rights reserved.</p>
-            <div className="mt-4 space-x-3 md:space-y-3  md:mt-0">
+            <div className="mt-4 space-x-3 md:space-y-3 md:mt-0">
                 <Link href="#" className="hover:text-gray-900 transition-colors">Privacy</Link>
                 <Link href="#" className="hover:text-gray-900 transition-colors">Terms</Link>
                 <Link href="#" className="hover:text-gray-900 transition-colors">Cookies</Link>
-              </div>
+            </div>
+          </div>
+          <div className="text-xs text-gray-400 text-center mt-4">
+            <a href="https://www.stanparaclete.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-500 transition-colors">Built By Stan Paraclete</a>
           </div>
         </div>
       </div>
