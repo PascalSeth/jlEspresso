@@ -72,7 +72,7 @@ export default function CoffeeMachineFAQ() {
           <div className="flex justify-center lg:justify-end">
             <div className="relative w-full max-w-md">
               <img
-                src="https://i.pinimg.com/736x/95/23/7b/95237ba9bb6fc2b8fa87e4a1e584fe93.jpg"
+                src="/jlexpresso/MachineFix.jpg"
                 alt="Coffee Machine"
                 className="w-full object-cover rounded-lg"
               />
