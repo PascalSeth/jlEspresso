@@ -36,7 +36,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 // Define TypeScript types based on Prisma schema
-export enum MachineType {
+ enum MachineType {
   ESPRESSO = "ESPRESSO",
   DRIP = "DRIP",
   FRENCH_PRESS = "FRENCH_PRESS",
@@ -46,7 +46,7 @@ export enum MachineType {
   OTHER = "OTHER"
 }
 
-export type Machine = {
+ type Machine = {
   id: string;
   name: string;
   description: string;
