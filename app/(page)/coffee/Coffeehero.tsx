@@ -52,7 +52,7 @@ const CoffeeHero = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
             >
-              Premium
+              Powering 
             </motion.span>
             <br />
             <motion.span
@@ -69,7 +69,7 @@ const CoffeeHero = () => {
               transition={{ delay: 0.8 }}
               className="text-amber-700"
             >
-              Everytime
+              Experience
             </motion.span>
           </h1>
           
@@ -144,14 +144,7 @@ const CoffeeHero = () => {
           >
             Signature Blend
           </motion.h3>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5 }}
-            className="text-lg font-bold text-center lg:text-left"
-          >
-            $20.00
-          </motion.p>
+        
         </motion.div>
 
         {/* Center text */}
@@ -198,7 +191,7 @@ const CoffeeHero = () => {
                 transition={{ repeat: Infinity, duration: 2 }}
                 className="w-2 h-2 bg-white rounded-full"
               />
-              Join Free
+              Explore
             </motion.button>
             <p className="font-medium text-sm sm:text-base">Elevate Your Coffee Experience</p>
             <motion.p 
