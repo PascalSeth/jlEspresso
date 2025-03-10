@@ -39,7 +39,7 @@ import { Badge } from "@/components/ui/badge"
 import { BeanSheet } from "./BeansSheet"
 
 // Define the coffee bean data type based on Prisma schema
-export type CoffeeBean = {
+type CoffeeBean = {
   id: string;
   name: string;
   description: string;
@@ -62,172 +62,178 @@ export type CoffeeBean = {
     productId: string;
   };
 };
-export const columns: ColumnDef<CoffeeBean>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "name",
-    header: "Name",
-    cell: ({ row }) => <div className="font-medium">{row.original.name}</div>,
-  },
-  {
-    accessorKey: "coffeeBeanDetails.origin",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Origin
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
-    ),
-    cell: ({ row }) => <div>{row.original.coffeeBeanDetails.origin}</div>,
-  },
-  {
-    accessorKey: "coffeeBeanDetails.roastLevel",
-    header: "Roast Level",
-    cell: ({ row }) => {
-      const roastLevel = row.original.coffeeBeanDetails.roastLevel;
-      return (
-        <Badge
-          variant={
-            roastLevel === "LIGHT"
-              ? "outline"
-              : roastLevel === "MEDIUM"
-              ? "secondary"
-              : roastLevel === "MEDIUM_DARK"
-              ? "default"
-              : "destructive"
+
+// Define table columns - now a function to avoid exporting at module level
+function getColumns(): ColumnDef<CoffeeBean>[] {
+  return [
+    {
+      id: "select",
+      header: ({ table }) => (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
           }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label="Select row"
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
+    {
+      accessorKey: "name",
+      header: "Name",
+      cell: ({ row }) => <div className="font-medium">{row.original.name}</div>,
+    },
+    {
+      accessorKey: "coffeeBeanDetails.origin",
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          {roastLevel.replace("_", " ")}
-        </Badge>
-      );
+          Origin
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      ),
+      cell: ({ row }) => <div>{row.original.coffeeBeanDetails.origin}</div>,
     },
-  },
-  {
-    accessorKey: "coffeeBeanDetails.flavorNotes",
-    header: "Flavor Notes",
-    cell: ({ row }) => {
-      const flavorNotes = row.original.coffeeBeanDetails.flavorNotes;
-      return (
-        <div className="flex flex-wrap gap-1">
-          {flavorNotes.slice(0, 3).map((note, i) => (
-            <Badge key={i} variant="outline" className="text-xs">
-              {note}
-            </Badge>
-          ))}
-          {flavorNotes.length > 3 && (
-            <Badge variant="outline" className="text-xs">
-              +{flavorNotes.length - 3} more
-            </Badge>
-          )}
+    {
+      accessorKey: "coffeeBeanDetails.roastLevel",
+      header: "Roast Level",
+      cell: ({ row }) => {
+        const roastLevel = row.original.coffeeBeanDetails.roastLevel;
+        return (
+          <Badge
+            variant={
+              roastLevel === "LIGHT"
+                ? "outline"
+                : roastLevel === "MEDIUM"
+                ? "secondary"
+                : roastLevel === "MEDIUM_DARK"
+                ? "default"
+                : "destructive"
+            }
+          >
+            {roastLevel.replace("_", " ")}
+          </Badge>
+        );
+      },
+    },
+    {
+      accessorKey: "coffeeBeanDetails.flavorNotes",
+      header: "Flavor Notes",
+      cell: ({ row }) => {
+        const flavorNotes = row.original.coffeeBeanDetails.flavorNotes;
+        return (
+          <div className="flex flex-wrap gap-1">
+            {flavorNotes.slice(0, 3).map((note, i) => (
+              <Badge key={i} variant="outline" className="text-xs">
+                {note}
+              </Badge>
+            ))}
+            {flavorNotes.length > 3 && (
+              <Badge variant="outline" className="text-xs">
+                +{flavorNotes.length - 3} more
+              </Badge>
+            )}
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "coffeeBeanDetails.processMethod",
+      header: "Process",
+      cell: ({ row }) => <div>{row.original.coffeeBeanDetails.processMethod}</div>,
+    },
+    {
+      accessorKey: "coffeeBeanDetails.weightGrams",
+      header: "Weight (g)",
+      cell: ({ row }) => <div>{row.original.coffeeBeanDetails.weightGrams}</div>,
+    },
+    {
+      accessorKey: "price",
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Price
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      ),
+      cell: ({ row }) => {
+        const price = parseFloat(row.original.price.toString());
+        const formatted = new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+        }).format(price);
+        return <div className="text-right font-medium">{formatted}</div>;
+      },
+    },
+    {
+      accessorKey: "stock",
+      header: "Stock",
+      cell: ({ row }) => {
+        const stock = row.original.stock;
+        return <div className={stock <= 10 ? "text-red-500 font-medium" : ""}>{stock}</div>;
+      },
+    },
+    {
+      accessorKey: "isActive",
+      header: "Status",
+      cell: ({ row }) => (
+        <div className={row.original.isActive ? "text-green-500" : "text-red-500"}>
+          {row.original.isActive ? "Active" : "Inactive"}
         </div>
-      );
+      ),
     },
-  },
-  {
-    accessorKey: "coffeeBeanDetails.processMethod",
-    header: "Process",
-    cell: ({ row }) => <div>{row.original.coffeeBeanDetails.processMethod}</div>,
-  },
-  {
-    accessorKey: "coffeeBeanDetails.weightGrams",
-    header: "Weight (g)",
-    cell: ({ row }) => <div>{row.original.coffeeBeanDetails.weightGrams}</div>,
-  },
-  {
-    accessorKey: "price",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Price
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
-    ),
-    cell: ({ row }) => {
-      const price = parseFloat(row.original.price.toString());
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(price);
-      return <div className="text-right font-medium">{formatted}</div>;
-    },
-  },
-  {
-    accessorKey: "stock",
-    header: "Stock",
-    cell: ({ row }) => {
-      const stock = row.original.stock;
-      return <div className={stock <= 10 ? "text-red-500 font-medium" : ""}>{stock}</div>;
-    },
-  },
-  {
-    accessorKey: "isActive",
-    header: "Status",
-    cell: ({ row }) => (
-      <div className={row.original.isActive ? "text-green-500" : "text-red-500"}>
-        {row.original.isActive ? "Active" : "Inactive"}
-      </div>
-    ),
-  },
-  {
-    id: "actions",
-    cell: ({ row }) => {
-      const bean = row.original;
+    {
+      id: "actions",
+      cell: ({ row }) => {
+        const bean = row.original;
 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(bean.id)}>
-              Copy ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View details</DropdownMenuItem>
-            <DropdownMenuItem>Update stock</DropdownMenuItem>
-            <DropdownMenuItem>Edit bean</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem onClick={() => navigator.clipboard.writeText(bean.id)}>
+                Copy ID
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>View details</DropdownMenuItem>
+              <DropdownMenuItem>Update stock</DropdownMenuItem>
+              <DropdownMenuItem>Edit bean</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        );
+      },
     },
-  },
-];
+  ];
+}
 
-
-export function CoffeeBeansDataTable({ data }: { data: CoffeeBean[] }) {
+// DataTable component now as a non-exported function
+function CoffeeBeansDataTable({ data }: { data: CoffeeBean[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
+
+  const columns = getColumns();
 
   const table = useReactTable({
     data,
@@ -358,50 +364,44 @@ export function CoffeeBeansDataTable({ data }: { data: CoffeeBean[] }) {
   )
 }
 
-// Example page component that uses the CoffeeBeansDataTable
+// The main page component - the only default export
 export default function CoffeeBeansPage() {
   const [coffeeBeans, setCoffeeBeans] = React.useState<CoffeeBean[]>([]);
   const [loading, setLoading] = React.useState<boolean>(true);
   const [error, setError] = React.useState<string | null>(null);
 
-    const fetchBeans = async () => {
-      try {
-        const response = await fetch("/api/GET/getBeans");
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status} - ${response.statusText}`);
-        }
-        const data: CoffeeBean[] = await response.json();
-        setCoffeeBeans(data);
-      } catch (error) {
-        setError((error as Error).message);
-      } finally {
-        setLoading(false);
+  const fetchBeans = async () => {
+    try {
+      const response = await fetch("/api/GET/getBeans");
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} - ${response.statusText}`);
       }
-    };  React.useEffect(() => {
-
-
+      const data: CoffeeBean[] = await response.json();
+      setCoffeeBeans(data);
+    } catch (error) {
+      setError((error as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  };  
+  
+  React.useEffect(() => {
     fetchBeans();
   }, []);
 
   return (
     <div className="container mx-auto py-10">
       <div className="flex items-center justify-between">
-   
-      <h1 className="text-2xl font-bold mb-5">Coffee Beans</h1>
-
-     
-
-<BeanSheet refreshBeans={fetchBeans}/>
-
-
+        <h1 className="text-2xl font-bold mb-5">Coffee Beans</h1>
+        <BeanSheet refreshBeans={fetchBeans}/>
       </div>
       {loading && (
         <div className="flex justify-center items-center h-64">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
         </div>
-      )}      {error && <p className="text-center text-red-500">{error}</p>}
+      )}
+      {error && <p className="text-center text-red-500">{error}</p>}
       {!loading && <CoffeeBeansDataTable data={coffeeBeans} />}
-
     </div>
   );
 }

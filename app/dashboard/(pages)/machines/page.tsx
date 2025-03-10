@@ -71,137 +71,143 @@ export type Machine = {
   } | null;
 };
 
-export const columns: ColumnDef<Machine>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "name",
-    header: "Name",
-    cell: ({ row }) => <div className="font-medium">{row.original.name}</div>,
-  },
-  {
-    accessorKey: "brand",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Brand
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    cell: ({ row }) => <div>{row.getValue("brand")}</div>,
-  },
-  {
-    accessorKey: "model",
-    header: "Model",
-    cell: ({ row }) => <div>{row.getValue("model")}</div>,
-  },
-  {
-    accessorKey: "type",
-    header: "Type",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("type")}</div>,
-  },
-  {
-    accessorKey: "warrantyMonths",
-    header: "Warranty (Months)",
-    cell: ({ row }) => <div>{row.getValue("warrantyMonths")}</div>,
-  },
-  {
-    accessorKey: "dimensions",
-    header: "Dimensions",
-    cell: ({ row }) => <div>{row.getValue("dimensions")}</div>,
-  },
-  {
-    accessorKey: "price",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Price
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    cell: ({ row }) => {
-      const price = parseFloat(row.original.price.toString())
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(price)
-      return <div className="text-right font-medium">{formatted}</div>
-    },
-  },
-  {
-    accessorKey: "isActive",
-    header: "Status",
-    cell: ({ row }) => (
-      <div className={row.original.isActive ? "text-green-500" : "text-red-500"}>
-        {row.original.isActive ? "Active" : "Inactive"}
-      </div>
-    ),
-  },
-  {
-    id: "actions",
-    cell: ({ row }) => {
-      const machine = row.original
 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(machine.id)}
-            >
-              Copy ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View machine details</DropdownMenuItem>
-            <DropdownMenuItem>View service history</DropdownMenuItem>
-            <DropdownMenuItem>Edit machine</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
+// Define table columns - now a function to avoid exporting at module level
+function getColumns(): ColumnDef<Machine>[] {
+  return [
+    {
+      id: "select",
+      header: ({ table }) => (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label="Select row"
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
     },
-  },
-]
+    {
+      accessorKey: "name",
+      header: "Name",
+      cell: ({ row }) => <div className="font-medium">{row.original.name}</div>,
+    },
+    {
+      accessorKey: "brand",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Brand
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        )
+      },
+      cell: ({ row }) => <div>{row.getValue("brand")}</div>,
+    },
+    {
+      accessorKey: "model",
+      header: "Model",
+      cell: ({ row }) => <div>{row.getValue("model")}</div>,
+    },
+    {
+      accessorKey: "type",
+      header: "Type",
+      cell: ({ row }) => <div className="capitalize">{row.getValue("type")}</div>,
+    },
+    {
+      accessorKey: "warrantyMonths",
+      header: "Warranty (Months)",
+      cell: ({ row }) => <div>{row.getValue("warrantyMonths")}</div>,
+    },
+    {
+      accessorKey: "dimensions",
+      header: "Dimensions",
+      cell: ({ row }) => <div>{row.getValue("dimensions")}</div>,
+    },
+    {
+      accessorKey: "price",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Price
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        )
+      },
+      cell: ({ row }) => {
+        const price = parseFloat(row.original.price.toString())
+        const formatted = new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+        }).format(price)
+        return <div className="text-right font-medium">{formatted}</div>
+      },
+    },
+    {
+      accessorKey: "isActive",
+      header: "Status",
+      cell: ({ row }) => (
+        <div className={row.original.isActive ? "text-green-500" : "text-red-500"}>
+          {row.original.isActive ? "Active" : "Inactive"}
+        </div>
+      ),
+    },
+    {
+      id: "actions",
+      cell: ({ row }) => {
+        const machine = row.original
+  
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem
+                onClick={() => navigator.clipboard.writeText(machine.id)}
+              >
+                Copy ID
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>View machine details</DropdownMenuItem>
+              <DropdownMenuItem>View service history</DropdownMenuItem>
+              <DropdownMenuItem>Edit machine</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )
+      },
+    },
+  ];
+}
 
-// Data Table Component
-export function MachinesDataTable({ data }: { data: Machine[] }) {
+// DataTable component now as a non-exported function
+function MachinesDataTable({ data }: { data: Machine[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
+
+  const columns = getColumns();
 
   const table = useReactTable({
     data,
@@ -226,10 +232,10 @@ export function MachinesDataTable({ data }: { data: Machine[] }) {
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter brands..."
-          value={(table.getColumn("brand")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter by name..."
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("brand")?.setFilterValue(event.target.value)
+            table.getColumn("name")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
@@ -297,7 +303,7 @@ export function MachinesDataTable({ data }: { data: Machine[] }) {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No machines found.
+                  No coffee beans found.
                 </TableCell>
               </TableRow>
             )}
@@ -332,8 +338,8 @@ export function MachinesDataTable({ data }: { data: Machine[] }) {
   )
 }
 
-// Main Page Component
-export default function MachinesPage() {
+// The main page component - the only default export
+export default function CoffeeBeansPage() {
   const [machines, setMachines] = React.useState<Machine[]>([])
   const [isLoading, setIsLoading] = React.useState(true)
   const [error, setError] = React.useState<string | null>(null)
@@ -364,7 +370,7 @@ export default function MachinesPage() {
   }, []);
 
   return (
-    <div className="container mx-auto py-10">
+   <div className="container mx-auto py-10">
             <div className="flex items-center justify-between">
                     <h1 className="text-2xl font-bold mb-5">Coffee Machines</h1>
       <MachineSheet/>
@@ -391,5 +397,5 @@ export default function MachinesPage() {
         <MachinesDataTable data={machines} />
       )}
     </div>
-  )
+  );
 }

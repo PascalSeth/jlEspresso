@@ -42,6 +42,7 @@ interface ServiceBooking {
   status: ServiceStatus
   technicianName?: string
 }
+
 // Format date without external libraries
 const formatDate = (date: Date): string => {
   const months = [
@@ -52,90 +53,92 @@ const formatDate = (date: Date): string => {
   return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
 };
 
-// Column definitions for the service bookings table
-const columns: ColumnDef<ServiceBooking>[] = [
-  {
-    accessorKey: "serviceDate",
-    header: "Date & Time",
-  cell: ({ row }) => {
-      const date = row.getValue("serviceDate") as Date
-      return (
-        <div className="flex items-center">
-          <Calendar className="mr-2 h-4 w-4 text-gray-500" />
-          {formatDate(date)}
-        </div>
-      )
+// Column definitions as a function (not exported at module level)
+function getColumns(): ColumnDef<ServiceBooking>[] {
+  return [
+    {
+      accessorKey: "serviceDate",
+      header: "Date & Time",
+      cell: ({ row }) => {
+        const date = row.getValue("serviceDate") as Date
+        return (
+          <div className="flex items-center">
+            <Calendar className="mr-2 h-4 w-4 text-gray-500" />
+            {formatDate(date)}
+          </div>
+        )
+      },
     },
-  },
-  {
-    accessorKey: "userName",
-    header: "Customer",
-  },
-  {
-    accessorKey: "machineName",
-    header: "Machine",
-  },
-  {
-    accessorKey: "serviceType",
-    header: "Service Type",
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => {
-      const status = row.getValue("status") as ServiceStatus
-      
-      return (
-        <Badge
-          variant={
-            status === "COMPLETED" ? "outline" :
-            status === "IN_PROGRESS" ? "destructive" :
-            status === "SCHEDULED" ? "default" :
-            "destructive"
-          }
-        >
-          {status.replace("_", " ")}
-        </Badge>
-      )
+    {
+      accessorKey: "userName",
+      header: "Customer",
     },
-  },
-  {
-    accessorKey: "technicianName",
-    header: "Technician",
-    cell: ({ row }) => {
-      const technician = row.getValue("technicianName") as string | undefined
-      return technician || "Unassigned"
+    {
+      accessorKey: "machineName",
+      header: "Machine",
     },
-  },
-  {
-    id: "actions",
-    cell: ({ row }) => {
-      const booking = row.original
-      
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(booking.id)}>
-              Copy booking ID
-            </DropdownMenuItem>
-            <DropdownMenuItem>View details</DropdownMenuItem>
-            <DropdownMenuItem>Assign technician</DropdownMenuItem>
-            <DropdownMenuItem>Update status</DropdownMenuItem>
-            <DropdownMenuItem className="text-red-600">Cancel booking</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
+    {
+      accessorKey: "serviceType",
+      header: "Service Type",
     },
-  },
-]
+    {
+      accessorKey: "status",
+      header: "Status",
+      cell: ({ row }) => {
+        const status = row.getValue("status") as ServiceStatus
+        
+        return (
+          <Badge
+            variant={
+              status === "COMPLETED" ? "outline" :
+              status === "IN_PROGRESS" ? "destructive" :
+              status === "SCHEDULED" ? "default" :
+              "destructive"
+            }
+          >
+            {status.replace("_", " ")}
+          </Badge>
+        )
+      },
+    },
+    {
+      accessorKey: "technicianName",
+      header: "Technician",
+      cell: ({ row }) => {
+        const technician = row.getValue("technicianName") as string | undefined
+        return technician || "Unassigned"
+      },
+    },
+    {
+      id: "actions",
+      cell: ({ row }) => {
+        const booking = row.original
+        
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => navigator.clipboard.writeText(booking.id)}>
+                Copy booking ID
+              </DropdownMenuItem>
+              <DropdownMenuItem>View details</DropdownMenuItem>
+              <DropdownMenuItem>Assign technician</DropdownMenuItem>
+              <DropdownMenuItem>Update status</DropdownMenuItem>
+              <DropdownMenuItem className="text-red-600">Cancel booking</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )
+      },
+    },
+  ]
+}
 
 export default function ServiceBookingsTable() {
   const [sorting, setSorting] = useState<SortingState>([])
@@ -197,6 +200,8 @@ export default function ServiceBookingsTable() {
       status: "SCHEDULED",
     },
   ]
+
+  const columns = getColumns();
 
   const table = useReactTable({
     data,
