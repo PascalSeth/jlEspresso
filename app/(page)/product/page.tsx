@@ -15,11 +15,7 @@ type Product =
   | typeof coffeeData.repairServices[0] 
   | typeof coffeeData.additionalServices[0];
 
-interface ProductDetailPageProps {
-  productId?: string;
-}
-
-export const ProductDetailPage: React.FC<ProductDetailPageProps> = () => {
+export default function ProductDetailPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const productId = searchParams.get("id");
@@ -323,5 +319,4 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = () => {
       </div>
     </motion.div>
   );
-};
-
+}
