@@ -74,7 +74,7 @@ export default function CoffeeMachineFAQ() {
               <img
                 src="/jlexpresso/MachineFix.jpg"
                 alt="Coffee Machine"
-                className="w-full object-cover rounded-lg"
+                className="w-full h-96 max-lg:h-72 object-cover rounded-lg"
               />
             </div>
           </div>
