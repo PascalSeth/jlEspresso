@@ -61,7 +61,7 @@ const AboutUsPage = () => {
           </div>
         </motion.div>
         <motion.div className="rounded-lg overflow-hidden h-64" whileHover={{ scale: 1.02 }}>
-          <img src="/jlexpresso/JlBusLeft.jpeg" alt="bus" className="w-full h-full object-cover" />
+          <img src="/jlexpresso/busRight.jpg" alt="bus" className="w-full h-full object-cover" />
         </motion.div>
       </motion.div>
       {/* Services Section */}

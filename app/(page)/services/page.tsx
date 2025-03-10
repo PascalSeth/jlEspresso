@@ -134,7 +134,7 @@ const EspressoServices: React.FC = () => {
         >
           <div className="absolute inset-0 bg-black/60 z-10"></div>
           <img 
-            src="/jlexpresso/JlBusLeft.jpeg" 
+            src="/jlexpresso/busRight.jpg" 
             alt="Espresso machine service" 
             className="absolute w-full h-full object-cover"
           />

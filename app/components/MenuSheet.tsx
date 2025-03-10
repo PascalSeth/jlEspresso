@@ -17,7 +17,7 @@ const MenuSheet = () => {
           <Menu className="h-6 w-6 text-gray-700" />
         </button>
       </SheetTrigger>
-      <SheetContent className='z-[9999]' side="right" className="bg-white w-64 z-[9999] p-5">
+      <SheetContent side="right" className="bg-white w-64 z-[9999] p-5">
         <SheetHeader>
           <SheetTitle className="text-xl font-semibold text-amber-700">
             Menu

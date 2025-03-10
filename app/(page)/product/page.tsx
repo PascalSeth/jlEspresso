@@ -314,11 +314,11 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = () => {
 
           {renderProductDetails()}
 
-          <div className="pt-6">
+          {/* <div className="pt-6">
             <Button className="w-full md:w-auto">
               {productType.includes("Service") ? "Book Now" : "Add to Cart"}
             </Button>
-          </div>
+          </div> */}
         </motion.div>
       </div>
     </motion.div>
