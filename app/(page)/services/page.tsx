@@ -8,7 +8,6 @@ interface Service {
   id: number;
   name: string;
   category: string;
-  price: string;
   description: string;
   image: string;
   features: string[];
@@ -27,7 +26,6 @@ const EspressoServices: React.FC = () => {
       id: 1,
       name: "Emergency Repair Service",
       category: "emergency",
-      price: "From £85",
       description: "Quick response emergency repair service for all espresso machine brands. Available 7 days a week with same-day service for JL area.",
       image: "https://i.pinimg.com/474x/3b/20/6c/3b206c0e9b333573fcb21615a86c8d73.jpg",
       features: [
@@ -41,9 +39,8 @@ const EspressoServices: React.FC = () => {
       id: 2,
       name: "Routine Maintenance",
       category: "maintenance",
-      price: "From £65",
       description: "Regular maintenance service to keep your machine running at peak performance. Prevent issues before they occur.",
-      image: "https://i.pinimg.com/474x/fd/8d/70/fd8d70df8138d2ad0ed00c177bbbdc82.jpg",
+      image: "/jlexpresso/MachineFix.jpg",
       features: [
         "Complete system check",
         "Deep cleaning & descaling",
@@ -55,7 +52,6 @@ const EspressoServices: React.FC = () => {
       id: 3,
       name: "Descaling & Calibration",
       category: "maintenance",
-      price: "From £45",
       description: "Professional descaling service and precise calibration to ensure the perfect extraction every time.",
       image: "https://i.pinimg.com/474x/da/11/c2/da11c23ac8571242cda6f3c68330f67a.jpg",
       features: [
@@ -69,7 +65,6 @@ const EspressoServices: React.FC = () => {
       id: 4,
       name: "Parts Replacement",
       category: "repair",
-      price: "Variable",
       description: "Genuine replacement parts for all major espresso machine brands, professionally installed by our certified technicians.",
       image: "https://i.pinimg.com/474x/55/eb/bb/55ebbb37a364f7cc65c8932b5e7ee24f.jpg",
       features: [
@@ -252,9 +247,7 @@ const EspressoServices: React.FC = () => {
                       alt={service.name}
                       className="w-full h-full object-cover transition duration-500 hover:scale-105"
                     />
-                    <div className="absolute top-4 right-4 bg-amber-900 text-white text-sm font-bold px-3 py-1 rounded-full">
-                      {service.price}
-                    </div>
+                    
                   </div>
                   
                   <div className="p-6">
@@ -280,14 +273,14 @@ const EspressoServices: React.FC = () => {
                       </ul>
                     </motion.div>
                     
-                    <motion.button 
+                    {/* <motion.button 
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       className="w-full bg-amber-100 hover:bg-amber-200 text-amber-900 font-medium py-3 rounded-lg transition duration-300"
                       onClick={() => console.log(`Booking service: ${service.id}`)}
                     >
                       Book Service
-                    </motion.button>
+                    </motion.button> */}
                   </div>
                 </motion.div>
               ))}
