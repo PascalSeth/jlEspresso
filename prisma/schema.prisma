@@ -1,0 +1,303 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// Core models
+model Product {
+  id            String         @id @default(uuid())
+  name          String
+  description   String
+  price         Decimal        @db.Decimal(10, 2)
+  stock         Int            @default(0)
+   image         String?        // Keep the main image for backward compatibility
+  images        String[]       // Array of image URLs
+  category      ProductCategory
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  isActive      Boolean        @default(true)
+  
+  // Relations
+  orderItems    OrderItem[]
+  cartItems     CartItem[]
+  
+  // Product type specific details
+  coffeeBeanDetails  CoffeeBeanDetails?
+  machineDetails     MachineDetails?
+}
+
+enum ProductCategory {
+  COFFEE_BEAN
+  MACHINE
+  ACCESSORY
+}
+
+model CoffeeBeanDetails {
+  id            String    @id @default(uuid())
+  origin        String
+  roastLevel    RoastLevel
+  flavorNotes   String[]
+  processMethod String
+  weightGrams   Int
+  availableGrinds GrindType[]  // Available grind options for this coffee
+  
+  // Relation to product
+  productId     String    @unique
+  product       Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+enum GrindType {
+  WHOLE_BEAN
+  EXTRA_FINE      // Turkish Coffee
+  FINE           // Espresso
+  MEDIUM_FINE    // Moka Pot, AeroPress
+  MEDIUM         // Drip Coffee, Pour Over
+  MEDIUM_COARSE  // Chemex
+  COARSE         // French Press, Cold Brew
+  EXTRA_COARSE   // Cowboy Coffee
+}
+
+enum RoastLevel {
+  LIGHT
+  MEDIUM
+  MEDIUM_DARK
+  DARK
+}
+
+model MachineDetails {
+  id                String    @id @default(uuid())
+  brand             String
+  model             String
+  type              MachineType
+  warrantyMonths    Int
+  dimensions        String    // Format: "HxWxD cm"
+  weight            Decimal   @db.Decimal(6, 2)  // kg
+  voltage           String
+  
+  // Relation to product
+  productId         String    @unique
+  product           Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  // Machines can have service records
+  serviceRecords    ServiceRecord[]
+  userMachines      UserMachine[]
+}
+
+enum MachineType {
+  ESPRESSO
+  DRIP
+  FRENCH_PRESS
+  POUR_OVER
+  CAPSULE
+  GRINDER
+  OTHER
+}
+
+model User {
+  id            String    @id @default(uuid())
+  firstName     String
+  lastName      String
+  email         String    @unique
+  password      String    
+  phone         String?
+  address       String?
+  role          UserRole  @default(CUSTOMER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  // Relations
+  orders        Order[]
+  machines      UserMachine[]
+  serviceSchedules ServiceSchedule[]
+  cart          Cart?
+}
+
+enum UserRole {
+  ADMIN
+  CUSTOMER
+  STAFF
+  TECHNICIAN
+}
+
+// Shopping cart model with field to track if it's been processed into an order
+model Cart {
+  id            String    @id @default(uuid())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  isCheckedOut  Boolean   @default(false)
+  
+  // Relations
+  userId        String    @unique
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  items         CartItem[]
+  
+  // Relation to the order created from this cart (if any)
+  order         Order?
+}
+
+model CartItem {
+  id            String    @id @default(uuid())
+  quantity      Int
+  selectedGrind GrindType? // Only relevant for coffee beans
+  addedAt       DateTime  @default(now())
+  
+  // Relations
+  cartId        String
+  cart          Cart      @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  
+  productId     String
+  product       Product   @relation(fields: [productId], references: [id])
+  
+  // Optional relation to track when this item becomes an order item
+  orderItemId   String?   @unique
+  orderItem     OrderItem? @relation(fields: [orderItemId], references: [id])
+  
+  @@unique([cartId, productId, selectedGrind])
+}
+
+model UserMachine {
+  id            String    @id @default(uuid())
+  serialNumber  String
+  purchaseDate  DateTime
+  notes         String?
+  
+  // Relations
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+  
+  machineDetailsId String
+  machineDetails MachineDetails @relation(fields: [machineDetailsId], references: [id])
+  
+  serviceRecords ServiceRecord[]
+  serviceSchedules ServiceSchedule[]
+}
+
+// Updated Order model to show relationship with Cart
+model Order {
+  id            String    @id @default(uuid())
+  orderDate     DateTime  @default(now())
+  status        OrderStatus
+  totalAmount   Decimal   @db.Decimal(10, 2)
+  paymentMethod PaymentMethod?
+  notes         String?
+  
+  // Relations
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+  
+  orderItems    OrderItem[]
+  
+  // Relation to the cart this order was created from
+  cartId        String?   @unique
+  cart          Cart?     @relation(fields: [cartId], references: [id])
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  CREDIT_CARD
+  CASH
+  BANK_TRANSFER
+  MOBILE_PAYMENT
+}
+
+// Updated: Removed redundant selectedGrind field
+model OrderItem {
+  id            String    @id @default(uuid())
+  quantity      Int
+  unitPrice     Decimal   @db.Decimal(10, 2)
+  
+  // Relations
+  orderId       String
+  order         Order     @relation(fields: [orderId], references: [id])
+  
+  productId     String
+  product       Product   @relation(fields: [productId], references: [id])
+  
+  // Relation to the cart item this order item was created from
+  cartItem      CartItem?
+  
+  @@unique([orderId, productId])
+}
+
+// Service-related models
+model Service {
+  id            String    @id @default(uuid())
+  name          String
+  description   String
+  price         Decimal   @db.Decimal(10, 2)
+  durationMinutes Int
+  isActive      Boolean   @default(true)
+  
+  // Relations
+  serviceRecords ServiceRecord[]
+  serviceSchedules ServiceSchedule[]
+}
+
+model ServiceRecord {
+  id            String    @id @default(uuid())
+  serviceDate   DateTime
+  technicianName String
+  diagnosis     String
+  workPerformed String
+  partsReplaced String?
+  cost          Decimal   @db.Decimal(10, 2)
+  status        ServiceStatus
+  notes         String?
+  
+  // Relations
+  machineId     String
+  machine       UserMachine @relation(fields: [machineId], references: [id])
+  
+  machineDetailsId String
+  machineDetails MachineDetails @relation(fields: [machineDetailsId], references: [id])
+  
+  serviceId     String
+  service       Service   @relation(fields: [serviceId], references: [id])
+}
+
+enum ServiceStatus {
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+model ServiceSchedule {
+  id            String    @id @default(uuid())
+  scheduledDate DateTime
+  recurrence    ServiceRecurrence?
+  notes         String?
+  
+  // Relations
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+  
+  machineId     String
+  machine       UserMachine @relation(fields: [machineId], references: [id])
+  
+  serviceId     String
+  service       Service   @relation(fields: [serviceId], references: [id])
+}
+
+enum ServiceRecurrence {
+  NONE
+  MONTHLY
+  QUARTERLY
+  SEMI_ANNUALLY
+  ANNUALLY
+}
