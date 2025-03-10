@@ -19,7 +19,7 @@ interface ProductDetailPageProps {
   productId?: string;
 }
 
-const ProductDetailPage: React.FC<ProductDetailPageProps> = () => {
+export const ProductDetailPage: React.FC<ProductDetailPageProps> = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const productId = searchParams.get("id");
@@ -325,4 +325,3 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = () => {
   );
 };
 
-export default ProductDetailPage;
