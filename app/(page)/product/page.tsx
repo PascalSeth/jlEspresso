@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -15,7 +15,17 @@ type Product =
   | typeof coffeeData.repairServices[0] 
   | typeof coffeeData.additionalServices[0];
 
-export default function ProductDetailPage() {
+// Loading component for Suspense fallback
+function ProductDetailLoading() {
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+    </div>
+  );
+}
+
+// Extract the content to a separate component that uses useSearchParams
+function ProductDetailContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const productId = searchParams.get("id");
@@ -318,5 +328,14 @@ export default function ProductDetailPage() {
         </motion.div>
       </div>
     </motion.div>
+  );
+}
+
+// Main component with Suspense
+export default function ProductDetailPage() {
+  return (
+    <Suspense fallback={<ProductDetailLoading />}>
+      <ProductDetailContent />
+    </Suspense>
   );
 }
